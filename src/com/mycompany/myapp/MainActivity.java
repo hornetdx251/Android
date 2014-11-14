@@ -16,6 +16,8 @@ public class MainActivity extends Activity
 	Player player = new Player();
 	int iBtn=0;
 	
+	CameraController camera=null;
+	
 	
     /** Called when the activity is first created. */
     @Override
@@ -25,7 +27,7 @@ public class MainActivity extends Activity
 		LinearLayout layout =new LinearLayout(this);
 		layout.setOrientation(LinearLayout.HORIZONTAL);
 		HorizontalScrollView scrollView = new HorizontalScrollView(this);
-		setContentView(scrollView);
+		// setContentView(scrollView);
 		
 		for(iBtn=0;iBtn<Tehai.TEHAI_MAX_CNT;iBtn++){
 			Button btn = new Button(this);
@@ -60,11 +62,27 @@ public class MainActivity extends Activity
 					   new LinearLayout.LayoutParams(
 						   LinearLayout.LayoutParams.WRAP_CONTENT,
 						   LinearLayout.LayoutParams.WRAP_CONTENT));
-		scrollView.addView(layout);
+						   
+		camera = new CameraController();
+		FrameLayout flayout = camera.init(this);
+		// scrollView.addView(flayout);	  
+		setContentView(flayout);
+		// scrollView.addView(layout);
 		
 		hai_pai();
 		ri_hai();
     }
+
+	@Override
+	protected void onPause()
+	{
+		// TODO: Implement this method
+		super.onPause();
+		
+		if(camera!=null){
+			camera.release();
+		}
+	}
 	
 	void hai_pai(){
 		yama.set();

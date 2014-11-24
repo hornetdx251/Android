@@ -20,11 +20,12 @@ public class Tehai
 	boolean isTenpai(){
 		return false;
 	}
-	public int getShanten(){
+	public ShantenInfo getShanten(){
 		ShantenCounter counter = new ShantenCounter();
 		return counter.getSyanten(tehai);
 	}
-	public int getShanten(Pi tsumo){
+	
+	public ShantenInfo getShanten(Pi tsumo){
 		ShantenCounter counter = new ShantenCounter();
 		List<Pi> temp = tehai;
 		temp.add(tsumo);

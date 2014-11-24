@@ -30,12 +30,13 @@ public class ShantenCounter
 	int fuurosuu;   //フーロ数
 	int temp;		//シャンテン数（計算用）
 	int syanten_normal;	//シャンテン数（結果用）
+	ShantenInfo info = new ShantenInfo(); // interface
 
 	//メンツ抜き関数
 	void mentu_cut(int i){
 		
 		// Skip if Zero.
-		for(;tehai[i]!=0;i++){
+		for(;tehai[i]==0;i++){
 			// Skip.
 		}
 		
@@ -75,7 +76,7 @@ public class ShantenCounter
 	void taatu_cut(int i){
 		
 		// Skip if Zero.
-		for(;tehai[i]!=0;i++){
+		for(;tehai[i]==0;i++){
 			// Skip.
 		}
 		
@@ -83,13 +84,20 @@ public class ShantenCounter
 		if(i>=38) 
 		{
 			// Calcurrate Shantenn
-			temp=8-mentu*2-kouho-toitu;
+			temp = 8 - mentu * 2 - kouho - toitu;
 			
 			// Log.d("jong","1 serch pattern is finished. (shanten=" + temp + ")------------------");
 			
 			// If calcurated shanten is minimum,
 			//  store this shanten-su.
-			if(temp<syanten_normal) { syanten_normal=temp; }
+			if(temp<syanten_normal) { 
+				syanten_normal=temp; 
+				Log.d("jong", "mentsu=" + mentu + " kouho=" + kouho + " toitu=" + toitu);
+				info.mentu = mentu;
+				info.taatu = kouho;
+				info.toitu = toitu;
+				info.shanten = syanten_normal;
+			}
 			return;
 		}
 		
@@ -135,7 +143,7 @@ public class ShantenCounter
 	public ShantenCounter(){fuurosuu=0;};
 	
 	
-	public int getSyanten(List<Pi> tehai_list){
+	public ShantenInfo getSyanten(List<Pi> tehai_list){
 		// clear state.
 		clear();
 		
@@ -152,11 +160,12 @@ public class ShantenCounter
 		/*
 		for(int i=0;i<NUM_KIND_OF_PI;i++){
 			Log.d("jong","index=" + i + " [" + tehai[i] + "]");
-		}*/
-		
+		}
+		*/
 		// return 0;
 		// return normal shanten.
-		return NormalSyanten();
+		int shanten = NormalSyanten();
+		return info;
 	}
 	
 	//通常手シャンテン
@@ -168,6 +177,9 @@ public class ShantenCounter
 		kouho=0;
 		temp=0;
 		syanten_normal=8;
+		
+		// 
+		Log.d("jong","<<<---------------");
 		
 		for(int i=1;i<38;i++)
 		{
@@ -185,11 +197,12 @@ public class ShantenCounter
 		if(fuurosuu == 0)
 			mentu_cut(1);   //頭無しと仮定して計算
 
+		Log.d("jong","--------------->>>");
 		//死に孤立字牌(これバグるからだめ)
 		// boolean ji=false;
 		//for(int i=31;i<38;i++){if(tehai[i]==4)ji=true;}
 		// return syanten_normal-fuurosuu*2+ji;	//最終的な結果
-		return syanten_normal-fuurosuu*2;
+		return syanten_normal - fuurosuu * 2;
 	}
 	
 	//国士シャンテン

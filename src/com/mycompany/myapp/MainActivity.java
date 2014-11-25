@@ -45,6 +45,14 @@ public class MainActivity extends Activity
 					ShantenInfo info = player.tehai.getShanten();
 					String str;
 					str = "@@@@@@@@ shanten=" + info.shanten + " mentu=" + info.mentu + " taatu=" + info.taatu + " toitu=" + info.toitu + " ";
+					if(info.shanten==0){
+						str += " tenpai! : ";
+						for(int i=0; i < 40; i++){
+							if(info.machi[i] != 0){
+								str += i + ", ";
+							}
+						}
+					}
 					// Log.d("jong","@@@@@@@@ shanten=" + player.tehai.getShanten()+"");
 					txt1.setText(str);
 				}

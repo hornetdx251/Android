@@ -23,11 +23,11 @@ public class ShantenCounter
 	// 39 : ?
 	
 	int tehai[] = new int[NUM_KIND_OF_PI];
+	int fuurosuu;   //フーロ数
 	
 	int mentu;		//メンツ数
 	int toitu;		//トイツ数
 	int kouho;		//ターツ数
-	int fuurosuu;   //フーロ数
 	int temp;		//シャンテン数（計算用）
 	int syanten_normal;	//シャンテン数（結果用）
 	ShantenInfo info = new ShantenInfo(); // interface
@@ -165,8 +165,27 @@ public class ShantenCounter
 		// return 0;
 		// return normal shanten.
 		int shanten = NormalSyanten();
+		if(shanten==0){
+			// calcurate machi-hai.
+			getMachi();
+		}
 		return info;
 	}
+	
+	void getMachi(){
+		for(int i=0;i < NUM_KIND_OF_PI; i++){
+			if(i==10||i==20||i==30||i>=38) continue;
+			tehai[i]++;
+			int shanten = NormalSyanten();
+			if(shanten<0){
+				info.machi[i]=1;
+			}
+			tehai[i]--;
+		}
+		// recalc shanten-info.
+		NormalSyanten();
+	}
+	
 	
 	//通常手シャンテン
 	public int NormalSyanten(){

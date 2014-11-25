@@ -9,4 +9,5 @@ public class ShantenInfo
 	public int toitu;
 	public int taatu;
 	public int shanten;
+	public int machi[] = new int[40];
 }
